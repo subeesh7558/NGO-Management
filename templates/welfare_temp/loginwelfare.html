@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Login 01</title>
+	  {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"  rel="stylesheet">
+	
+	<link  href="{%  static 'css/style.css' %}" rel="stylesheet">
+	</head>
+	<body>
+		<style>
+		.login-wrap .icon {
+			width: 80px;
+			height: 80px;
+			background: #1089ff;
+			border-radius: 50%;
+			font-size: 30px;
+			margin: 0 auto;
+			  margin-bottom: 0px;
+			margin-bottom: 10px;
+		  }
+		  .align-items-center {
+			-webkit-box-align: center !important;
+			-ms-flex-align: center !important;
+			align-items: center !important;
+		  }
+		  .justify-content-center {
+			-webkit-box-pack: center !important;
+			-ms-flex-pack: center !important;
+			justify-content: center !important;
+		  }
+		  .d-flex {
+			display: -webkit-box !important;
+			display: -ms-flexbox !important;
+			display: flex !important;
+		  }
+		  *, ::before, ::after {
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		  }
+		  .btn.btn-primary {
+          background: #1089ff !important;
+          border: 1px solid #1089ff !important;
+         color: rgb(9, 9, 9) !important;
+         }
+		 .justify-content-center {
+        -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+       justify-content: center !important;
+       }
+	    .a {
+           -webkit-transition: .3s all ease;
+          -o-transition: .3s all ease;
+          transition: .3s all ease;
+          color: #1089ff;
+		  
+          }
+		  .login-wrap {
+          position: relative;
+          background: #fff;
+          border-radius: 10px;
+           -webkit-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+          -moz-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+          box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+         }
+		
+		  </style>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+		      	</div>
+		      	<h3 class="text-center mb-4">Sign In</h3>
+						<form action="{% url 'login' %}" class="login-form" method="post">
+							{% csrf_token %}
+		      		<div class="form-group">
+		      			<input type="text" class="form-control rounded-left" name="email" placeholder="Username/Email" required>
+		      		</div>
+	            <div class="form-group d-flex">
+	              <input type="password" class="form-control rounded-left" name="password" placeholder="Password" required>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Login</button>
+	            </div>
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50">
+	            		<label class="checkbox-wrap checkbox-primary">Remember Me
+									  <input type="checkbox" checked>
+									  <span class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a href="#">Forgot Password?</a>
+									
+								</div>
+
+	            </div>
+	          </form>
+	        </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/popper.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}s"></script>
+
+	</body>
+</html>
+

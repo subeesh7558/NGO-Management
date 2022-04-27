@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Form-v5 by Colorlib</title>
+	{% load static %}
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/roboto-font.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-5/css/fontawesome-all.min.css' %}">
+	<!-- Main Style Css -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body class="form-v5">
+	<style>
+		.page-content {
+			width: 100%;
+			margin: 0 auto;
+			background: #5eb2b3;
+			display: flex;
+			display: -webkit-flex;
+			justify-content: center;
+			-o-justify-content: center;
+			-ms-justify-content: center;
+			-moz-justify-content: center;
+			-webkit-justify-content: center;
+			align-items: center;
+			-o-align-items: center;
+			-ms-align-items: center;
+			-moz-align-items: center;
+			-webkit-align-items: center;
+		}
+
+		.form-detail .form-row {
+			position: relative;
+		}
+
+		.form-detail label {
+			display: block;
+			font-size: 18px;
+			padding-bottom: 10px;
+		}
+
+		.form-v5-content {
+			font-family: 'Roboto', sans-serif;
+			color: #333;
+			font-weight: 400;
+			font-size: 18px;
+		}
+
+		.form-v5-content {
+			background: #fff;
+			width: 670px;
+			border-radius: 8px;
+			-o-border-radius: 8px;
+			-ms-border-radius: 8px;
+			-moz-border-radius: 8px;
+			-webkit-border-radius: 8px;
+			margin: 175px 0;
+			font-family: 'Roboto', sans-serif;
+			color: #333;
+			font-weight: 400;
+			position: relative;
+			font-size: 18px;
+		}
+
+		.form-v5-content .form-detail {
+			padding: 30px 45px 30px 45px;
+			position: relative;
+		}
+
+		.form-detail h2 {
+			font-weight: 700;
+			font-size: 25px;
+			text-align: center;
+			position: relative;
+			padding: 3px 0 20px;
+			margin-bottom: 40px;
+		}
+
+		.form-detail .input-text {
+			margin-bottom: 26px;
+		}
+
+		.form-detail input {
+			width: 94.5%;
+			padding: 10.5px 15px;
+			border: 1px solid #e5e5e5;
+			appearance: unset;
+			-moz-appearance: unset;
+			-webkit-appearance: unset;
+			-o-appearance: unset;
+			-ms-appearance: unset;
+			outline: none;
+			-moz-outline: none;
+			-webkit-outline: none;
+			-o-outline: none;
+			-ms-outline: none;
+			border-radius: 4px;
+			-o-border-radius: 4px;
+			-ms-border-radius: 4px;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			font-family: 'Roboto', sans-serif;
+			font-weight: 400;
+			font-size: 18px;
+		}
+
+		.form-v5-content {
+			font-family: 'Roboto', sans-serif;
+			color: #333;
+			font-weight: 400;
+			font-size: 18px;
+		}
+	</style>
+	<div class="page-content">
+		<div class="form-v5-content">
+			<form class="form-detail" action="{% url 'Registration' %}" method="post">
+				{% csrf_token %}
+				<h2>Register Account Form</h2>
+				<div class="form-row">
+					<label for="full-name">First Name</label>
+					<input type="text" name="fname" class="input-text" placeholder="FullName" required>
+					<!-- <i class="fas fa-user"></i> -->
+				</div>
+				<div class="form-row">
+					<label for="full-name">Last Name</label>
+					<input type="text" name="lname" class="input-text" placeholder="LastName" required>
+					<!-- <i class="fas fa-user"></i> -->
+				</div>
+				<div class="form-row">
+					<label for="full-name">Date Of Birth</label>
+					<input type="date" name="dateofbirth" class="input-text " placeholder="Date Of Birth" required>
+					<!-- <i class="fas fa-user"></i> -->
+				</div>
+				<div class="form-row">
+					<label for="full-name">Gender</label>
+					<select class="form-control text-dark" name="gender" id="gender" required>
+						<option>--select--</option>
+						<option value="Male" class="text-dark">Male</option>
+						<option value="Female" class="text-dark">Female</option>
+						<option value="Other" class="text-dark">Other</option>
+					</select>
+					<!-- <i class="fas fa-user"></i> -->
+				</div>
+				<div class="form-row">
+					<label for="your-email">Your Email</label>
+					<input type="text" name="email" class="input-text" placeholder="Your Email" required>
+					<!-- <i class="fas fa-envelope"></i> -->
+				</div>
+				<div class="form-row">
+					<label for="password">Password</label>
+					<input type="password" name="password"  class="input-text" placeholder="Your Password"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+				<div class="form-row">
+					<label>Contact Number</label>
+					<input type="text" name="mobile"  class="input-text" placeholder="Contact Number"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+
+				<div class="form-row">
+					<label >Alternative Number</label>
+					<input type="text" name="alt_no"  class="input-text" placeholder="Alternative Number"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+				<div class="form-row">
+					<label >Pincode</label>
+					<input type="text" name="pincode"  class="input-text" placeholder="Pincode"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+				<div class="form-row">
+					<label >District</label>
+					<input type="text" name="district"  class="input-text" placeholder="District"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+				
+				<div class="form-row">
+					<label >State</label>
+					<input type="text" name="state"  class="input-text" placeholder="State"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+				<div class="form-row">
+					<label >Country</label>
+					<input type="text" name="country"  class="input-text" placeholder="Country"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+
+				<div class="form-row">
+					<label for="full-name">Choose Your Designation</label>
+					<select class="form-control text-dark" name="desig"  required>
+						<option>--select--</option>
+						{% for i in designations %}
+                        <option value="{{i.id}}">{{i.designation}}</option>
+                        {% endfor %}
+					</select>
+					<!-- <i class="fas fa-user"></i> -->
+				</div>
+
+				<div class="form-row">
+					<label >Address 1</label>
+					<input type="text" name="address1"  class="input-text" placeholder="Address 1"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+				<div class="form-row">
+					<label >Address 2</label>
+					<input type="text" name="address2"  class="input-text" placeholder="Address 2"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+				<div class="form-row">
+					<label >Address 3</label>
+					<input type="text" name="address3"  class="input-text" placeholder="Address 3"
+						required>
+					<!-- <i class="fas fa-lock"></i> -->
+				</div>
+			
+				
+				<div class="form-row-last">
+					<input type="submit" name="register" class="register" value="Register">
+				</div>
+			</form>
+		</div>
+	</div>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
