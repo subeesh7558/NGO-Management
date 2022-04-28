@@ -1,4 +1,4 @@
-{%extends 'admin_temp/Admin_index.html'%}
+{%extends 'admin_temp/Ngo_index.html'%}
 {%load static%}
 {%block content%}
 
@@ -20,7 +20,7 @@
         </div>
         <div class="col-lg-12 grid-margin stretch-card ">
             <div class="card">
-                <div class="card-body" style="background-color:wheat">
+                <div class="card-body">
                     <h4 class="card-title">Doner Details</h4>
 
 
@@ -28,18 +28,20 @@
                         placeholder="Search for names.." title="Type in a name"><br>
 
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-dark">
                             <thead>
                                 <tr>
                                     <th>Sl.No</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact</th>
+                                    <th>Country</th>
+                                
                                     <th>Status</th>
                                     
                                 </tr>
                             </thead>
-                            <tbody id="myTable">
+                            <tbody>
 
                                 {% for i in cs %}
                                 <tr>
@@ -47,19 +49,28 @@
                                     <td>{{i.firstname}}</td>
                                     <td>{{i.email}}</td>
                                     <td>{{i.mobile}}</td>
+                                    <td>{{i.country}}</td>
+                               
                                     
 
 
 
                                    <td>
 
-                                        <a href="#" style="text-decoration: none;">
-                                            <button type="submit" class="btn btn-sm btn-success btn-icon-text">
-
-                                                {{i.status}}
-                                            </button>
-                                        </a>
+                                    {% if i.status == "approved" %}
+                                    <button type="submit" class="btn btn-sm btn-success btn-icon-text">
+                                        {{i.status}}
+                                    </button>
+                
+                                    {% else %}
+                                    <button type="submit" class="btn btn-sm btn-danger btn-icon-text">
+                                        {{i.status}}
+                                    </button>
                                     </td>
+                
+                                    {% endif %}
+
+                                  
                                    
                                 </tr>
 

@@ -75,7 +75,7 @@ def login(request):
         elif user_registration.objects.filter(email=request.POST['email'], password=request.POST['password'],designation=Ngo.id,status="approved").exists():
                 
                 member=user_registration.objects.get(email=request.POST['email'], password=request.POST['password'])
-                request.session['Tne_id'] = member.designation_id
+                request.session['ngid'] = member.designation_id
                 request.session['usernamets1'] = member.firstname
                 request.session['Tne_id'] = member.id 
                 mem1=user_registration.objects.filter(id= member.id)
@@ -122,7 +122,38 @@ def Registration(request):
 
 
 def Admin_index(request):
+    
     return render(request, 'admin_temp/Admin_index.html')
+
+
+
+
+
+
+def Admin_Msg_doner(request):
+    design=designation.objects.get(designation="Donar")
+    if request.method == 'POST':
+        vars = message_admin()
+        vars.message=request.POST.get('msg1')
+        vars.date=datetime.now()
+        vars.message_to_id=design.id
+        vars.save()
+    return redirect('Admin_index')
+
+
+def Admin_Msg_ngo(request):
+    design=designation.objects.get(designation="Ngo")
+    if request.method == 'POST':
+        vars = message_admin()
+        vars.message=request.POST.get('msg2')
+        vars.date=datetime.now()
+        vars.message_to_id=design.id
+        vars.save()
+    return redirect('Admin_index')
+
+
+
+
 
 def nadmin(request):
     return render(request, 'admin_temp/nadmin.html')
@@ -140,7 +171,8 @@ def Admin_ngo_det(request):
 def Admin_nofification(request):
     des = designation.objects.all()
     cs = user_registration.objects.all().order_by('-id')
-    return render(request, 'admin_temp/Admin_nofification.html',{'cs':cs})
+    count=user_registration.objects.all().count()
+    return render(request, 'admin_temp/Admin_nofification.html',{'cs':cs,'count':count})
 
 
 def Admin_reject(request,id):
@@ -162,13 +194,8 @@ def Admin_logout(request):
 
 
 
-def Ngo_logout(request):
-    request.session.flush()
-    return redirect("/")
 
 
-def Ngo_index(request):
-    return render(request, 'admin_temp/Ngo_index.html')
 
 
 def Donar_logout(request):
@@ -197,6 +224,7 @@ def Donar_donation_registration(request):
                 acc.mobile = request.POST['mobile']
                 acc.pincode = request.POST['pincode']
                 acc.country = request.POST['country']
+                acc.status = "pending"
                 acc.permanentaddress1 = request.POST['address1']
                 acc.permanentaddress2 = request.POST['address2']
                 acc.payment = request.POST['pay']
@@ -210,4 +238,80 @@ def Donar_donation_registration(request):
 
 
 def Donar_donation_det(request):
-    return render(request, 'admin_temp/Donar_donation_det.html') 
+    cs = doner_registration.objects.all().order_by('-id')
+    return render(request, 'admin_temp/Donar_donation_det.html',{'cs':cs}) 
+
+
+def Doner_req_det(request):
+    des = designation.objects.get(designation='Donar')
+    cs = doner_registration.objects.all().order_by('-id')
+    return render(request, 'admin_temp/Doner_req_det.html',{'cs': cs})
+
+def Doner_admin_message(request):
+    des = designation.objects.get(designation='Donar')
+    cs = message_admin.objects.filter(message_to_id=des).order_by('-id')
+    
+    return render(request, 'admin_temp/Doner_admin_message.html',{'cs':cs})
+
+
+
+
+
+
+
+
+
+def Ngo_logout(request):
+    request.session.flush()
+    return redirect("/")
+
+
+def Ngo_index(request):
+    return render(request, 'admin_temp/Ngo_index.html')
+
+
+def Ngo_No_Card(request):
+    des = designation.objects.get(designation='Ngo')
+    count2=doner_registration.objects.all().count()
+    count=message_admin.objects.filter(message_to=des).count()
+    return render(request, 'admin_temp/Ngo_No_Card.html',{'count2':count2,'count':count})
+
+
+def Ngo_admin_messages(request):
+    des = designation.objects.get(designation='Ngo')
+    cs = message_admin.objects.filter(message_to_id=des).order_by('-id')
+    
+    return render(request, 'admin_temp/Ngo_admin_messages.html',{'cs':cs})
+
+
+
+def Ngo_doner_det(request):
+    des = designation.objects.get(designation='Donar')
+    cs = doner_registration.objects.all().order_by('-id')
+    return render(request, 'admin_temp/Ngo_doner_det.html',{'cs': cs})
+
+
+def Ngo_nofification(request):
+    
+    des = designation.objects.all()
+    cs = doner_registration.objects.all().order_by('-id')
+    return render(request, 'admin_temp/Ngo_nofification.html',{'cs':cs})
+
+
+
+def Ngo_reject(request,id):
+    pro_sts = doner_registration.objects.filter(id=id).update(status ='rejected')
+    return redirect('Ngo_nofification')
+   
+
+
+def Ngo_approve(request,id):
+    al = doner_registration.objects.filter(id=id).update(status ='approved')
+    return redirect('Ngo_nofification')
+
+
+
+def Ngo_donation_history(request):
+    cs = doner_registration.objects.filter(status='approved').order_by('-id')
+    return render(request, 'admin_temp/Ngo_donation_history.html',{'cs':cs})
+
