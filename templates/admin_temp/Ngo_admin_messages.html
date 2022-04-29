@@ -40,24 +40,30 @@
                             <tbody id="myTable">
 
 
-                           {% for i in cs%}
+                                {% for i in cs%}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{i.date|date:"d-m-Y"}}</td>
-                                    
+
 
                                     <td>{{i.message}}</td>
                                     <td>
-                                       
-                                        
-                                        <button type="button" class=" btn btn-primary" data-toggle="modal"
-                                        data-target="#myModal{{i.id}}">
-                                          Replay
-                                          
-                                        </button>
-                                        </td>
 
-                                        {% endfor %}
+                                        {% if i.replay == "pending" %}
+                                        <button type="button" class=" btn btn-primary" data-toggle="modal"
+                                            data-target="#myModal{{i.id}}">
+                                            Replay
+
+                                        </button>
+                                        {% else %}
+                                        <button type="button" class=" btn btn-success">
+                                            Replayed
+
+                                        </button>
+                                    </td>
+                                    {% endif %}
+                                    </tr>
+                                    {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -68,50 +74,54 @@
         {% for i in cs %}
         <div class="modal fade" id="myModal{{i.id}}" role="dialog">
             <div class="modal-dialog">
-        
+
                 <!-- Modal content-->
                 <div class="modal-content" style="background-color: wheat;">
                     <div class="modal-header">
-                        <button type="button" class="close" style="color: rgb(13, 13, 13);"  data-dismiss="modal">&times;</button>
-                        
+                        <button type="button" class="close" style="color: rgb(13, 13, 13);"
+                            data-dismiss="modal">&times;</button>
+
                     </div>
-                    <h4 style="margin-left: 140px;" class="modal-title" > Replay To Admin</h4>
+                    <h4 style="margin-left: 140px;" class="modal-title"> Replay To Admin</h4>
                     <!-- Modal body -->
-                    <div class="modal-body"  style="background-color: wheat;">
-                        <form action="{% url 'Ngo_admin_messages_replay' i.id %}" method="post" enctype="multipart/form-data">
+                    <div class="modal-body" style="background-color: wheat;">
+                        <form action="{% url 'Ngo_admin_messages_replay' i.id %}" method="post"
+                            enctype="multipart/form-data">
                             {% csrf_token %}
-                            <div class="card"  style="background-color: wheat;">
+                            <div class="card" style="background-color: wheat;">
                                 <div class="card-body">
                                     <div class="row p-2">
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center">
-                                            <textarea class="col-12 col-sm-12 col-md-12 col-lg-12 form-control  text-light"
+                                            <textarea
+                                                class="col-12 col-sm-12 col-md-12 col-lg-12 form-control  text-light"
                                                 style="height: 200px; background-color: #413434; " name="rep"
                                                 rows="4"> </textarea>
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center pb-3">
+                                    <div
+                                        class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center pb-3">
                                         <button type="submit" class="btn btn-primary btn-icon-text ">
-        
+
                                             Send
                                         </button>
                                     </div>
                                 </div>
                             </div>
-        
+
                         </form>
-        
+
                     </div>
-        
+
                 </div>
-        
+
             </div>
         </div>
 
         {% endfor %}
 
 
- 
+
 
         <script>
             function myFunction() {

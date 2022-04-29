@@ -169,12 +169,20 @@
 									<td>
 
 
-										<button type="button" class=" btn btn-primary" data-toggle="modal"
-											data-target="#myModal{{i.id}}">
-											Replay
+										{% if i.replay == "pending" %}
+                                        <button type="button" class=" btn btn-primary" data-toggle="modal"
+                                            data-target="#myModal{{i.id}}">
+                                            Replay
 
-										</button>
+                                        </button>
+                                        {% else %}
+                                        <button type="button" class=" btn btn-success">
+                                            Replayed
+
+                                        </button>
 									</td>
+									{% endif %}
+									</tr>
 
 									{% endfor %}
 							</tbody>
