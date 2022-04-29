@@ -70,6 +70,7 @@ class message_admin(models.Model):
     message_to = models.ForeignKey(designation, on_delete=models.DO_NOTHING,null=True, blank=True)
     date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
     message = models.TextField()
+    replay = models.CharField(max_length=240, null=True, default='')
 
 
     def __str__(self):

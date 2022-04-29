@@ -49,7 +49,7 @@
 	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
 	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
 	<!-- Superfish -->
 	<link rel="stylesheet" href="{% static 'css/superfish.css' %}">
 
@@ -115,7 +115,7 @@
 
 		<div class="fh5co-hero">
 			<div class="fh5co-overlay"></div>
-			<div class="fh5co-cover text-center" data-stellar-background-ratio="0.5" style="background-image: url({% static 'images/bg_1.jpg' %});">
+			<div class="fh5co-cover text-center" data-stellar-background-ratio="0.5"><img src="{% static 'images/bg_1.jpg' %}">
 				<div class="desc animate-box">
 					<h2><strong>Donate</strong> for the <strong>Poor Children</strong></h2>
 					<span> <a href="http://frehtml5.co/" target="_blank" class="fh5co-site-name"></a></span>
@@ -172,10 +172,15 @@
                                     {{i.status}}
                                 </button>
             
-                                {% else %}
-                                <button type="submit" class="btn btn-sm btn-danger btn-icon-text">
-                                    {{i.status}}
-                                </button>
+								{% elif i.status == "rejected" %}
+								<button type="submit" class="btn btn-sm btn-danger btn-icon-text">
+									{{i.status}}
+								</button>
+							  
+								{% else %}
+								<button type="submit" class="btn btn-sm btn-warning btn-icon-text">
+									{{i.status}}
+								</button>
                                 </td>
             
                                 {% endif %}

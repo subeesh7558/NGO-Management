@@ -32,6 +32,10 @@ urlpatterns = [
     path('Admin_approve/<int:id>', views.Admin_approve, name='Admin_approve'),
     path('Admin_Msg_doner/', views.Admin_Msg_doner, name='Admin_Msg_doner'),
     path('Admin_Msg_ngo/', views.Admin_Msg_ngo, name='Admin_Msg_ngo'),
+    path('Admin_No_Card/', views.Admin_No_Card, name='Admin_No_Card'),
+    path('Admin_Notification_des_Card/', views.Admin_Notification_des_Card, name='Admin_Notification_des_Card'),
+    path('Admin_ngo_messages/', views.Admin_ngo_messages, name='Admin_ngo_messages'),
+    path('Admin_donar_messages/', views.Admin_donar_messages, name='Admin_donar_messages'),
 
     path('Admin_logout/',views.Admin_logout, name='Admin_logout'),
     path('Ngo_logout/',views.Ngo_logout, name='Ngo_logout'),
@@ -44,6 +48,7 @@ urlpatterns = [
     path('Ngo_approve/<int:id>', views.Ngo_approve, name='Ngo_approve'),
     path('Ngo_donation_history/', views.Ngo_donation_history, name='Ngo_donation_history'),
     path('Ngo_admin_messages/', views.Ngo_admin_messages, name='Ngo_admin_messages'),
+    path('Ngo_admin_messages_replay/<int:id>', views.Ngo_admin_messages_replay, name='Ngo_admin_messages_replay'),
 
 
 
@@ -55,6 +60,8 @@ urlpatterns = [
     path('Donar_donation_det/',views.Donar_donation_det, name='Donar_donation_det'),
     path('Doner_req_det/', views.Doner_req_det, name='Doner_req_det'),
     path('Doner_admin_message/', views.Doner_admin_message, name='Doner_admin_message'),
+    path('Donar_admin_messages_replay/<int:id>', views.Donar_admin_messages_replay, name='Donar_admin_messages_replay'),
+
 
 
     

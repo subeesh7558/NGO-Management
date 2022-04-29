@@ -1,4 +1,4 @@
-{%extends 'admin_temp/Ngo_index.html'%}
+{%extends 'admin_temp/Admin_index.html'%}
 {%load static%}
 {%block content%}
 
@@ -18,68 +18,38 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 grid-margin stretch-card ">
-            <div class="card">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card" style="background-color:wheat">
                 <div class="card-body">
-                    <h4 class="card-title">Doner Details</h4>
+                    <h4 class="card-title">Messages</h4>
 
 
                     <input type="text" class="form-control mb-2" id="myInput" onkeyup="myFunction()"
-                        placeholder="Search for names.." title="Type in a name"><br>
+                        placeholder="Search for Dates.." title="Type in a name"><br>
 
-                    <div class="table-responsive">
-                        <table class="table table-hover table-dark">
+                    <div class="table-responsive ">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Sl.No</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Contact</th>
-                                    <th>Country</th>
-                                
-                                    <th>Status</th>
-                                    
+                                    <th>Date</th>
+                                    <th>Message</th>
+                                    <th>Replay</th>
                                 </tr>
                             </thead>
                             <tbody id="myTable">
 
-                                {% for i in cs %}
+
+                           {% for i in cs%}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{i.firstname}}</td>
-                                    <td>{{i.email}}</td>
-                                    <td>{{i.mobile}}</td>
-                                    <td>{{i.country}}</td>
-                               
+                                    <td>{{i.date|date:"d-m-Y"}}</td>
                                     
 
+                                    <td>{{i.message}}</td>
+                                    <td>{{i.replay}}</td>
 
-
-                                   <td>
-
-                                    {% if i.status == "approved" %}
-                                    <button type="submit" class="btn btn-sm btn-success btn-icon-text">
-                                        {{i.status}}
-                                    </button>
-                
-                                    {% elif i.status == "rejected" %}
-                                    <button type="submit" class="btn btn-sm btn-danger btn-icon-text">
-                                        {{i.status}}
-                                    </button>
-                                  
-                                    {% else %}
-                                    <button type="submit" class="btn btn-sm btn-warning btn-icon-text">
-                                        {{i.status}}
-                                    </button>
-                                    </td>
-                
-                                    {% endif %}
-
-                                  
-                                   
-                                </tr>
-
-                                {% endfor %}
+                                        {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -89,6 +59,7 @@
 
 
 
+ 
 
         <script>
             function myFunction() {

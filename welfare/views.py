@@ -136,6 +136,7 @@ def Admin_Msg_doner(request):
         vars = message_admin()
         vars.message=request.POST.get('msg1')
         vars.date=datetime.now()
+        vars.replay = "pending"
         vars.message_to_id=design.id
         vars.save()
     return redirect('Admin_index')
@@ -147,6 +148,7 @@ def Admin_Msg_ngo(request):
         vars = message_admin()
         vars.message=request.POST.get('msg2')
         vars.date=datetime.now()
+        vars.replay = "pending"
         vars.message_to_id=design.id
         vars.save()
     return redirect('Admin_index')
@@ -192,7 +194,31 @@ def Admin_logout(request):
     return redirect("/")
 
 
+def Admin_No_Card(request):
+    des = designation.objects.get(designation='Ngo')
+    count2=user_registration.objects.all().count()
+    return render(request, 'admin_temp/Admin_No_Card.html',{'count2':count2})
 
+def Admin_Notification_des_Card(request):
+    des = designation.objects.get(designation='Ngo')
+    count=message_admin.objects.filter(message_to=des).count()
+    des2 = designation.objects.get(designation='Donar')
+    count2 = message_admin.objects.filter(message_to_id=des2).count()
+    return render(request, 'admin_temp/Admin_Notification_des_Card.html',{'count':count,'count2':count2})
+
+
+
+def Admin_ngo_messages(request):
+    des = designation.objects.get(designation='Ngo')
+    cs = message_admin.objects.filter(message_to_id=des).order_by('-id')
+    
+    return render(request, 'admin_temp/Admin_ngo_messages.html',{'cs':cs})
+
+def Admin_donar_messages(request):
+    des = designation.objects.get(designation='Donar')
+    cs = message_admin.objects.filter(message_to_id=des).order_by('-id')
+    
+    return render(request, 'admin_temp/Admin_donar_messages.html',{'cs':cs})
 
 
 
@@ -231,7 +257,7 @@ def Donar_donation_registration(request):
                 acc.message = request.POST['msg']
                 acc.date = datetime.now()
                 acc.save()
-            return redirect('Donar_donation')
+            return redirect('Doner_req_det')
 
 
 
@@ -253,6 +279,11 @@ def Doner_admin_message(request):
     
     return render(request, 'admin_temp/Doner_admin_message.html',{'cs':cs})
 
+def Donar_admin_messages_replay(request,id):
+    if request.method == 'POST':
+        ngoreplay=request.POST.get('rep2')
+        pro_sts = message_admin.objects.filter(id=id).update(replay = ngoreplay)
+    return redirect('Doner_admin_message')
 
 
 
@@ -283,6 +314,12 @@ def Ngo_admin_messages(request):
     
     return render(request, 'admin_temp/Ngo_admin_messages.html',{'cs':cs})
 
+
+def Ngo_admin_messages_replay(request,id):
+    if request.method == 'POST':
+        ngoreplay=request.POST.get('rep')
+        pro_sts = message_admin.objects.filter(id=id).update(replay = ngoreplay)
+    return redirect('Ngo_admin_messages')
 
 
 def Ngo_doner_det(request):
