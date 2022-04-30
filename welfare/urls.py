@@ -36,6 +36,7 @@ urlpatterns = [
     path('Admin_Notification_des_Card/', views.Admin_Notification_des_Card, name='Admin_Notification_des_Card'),
     path('Admin_ngo_messages/', views.Admin_ngo_messages, name='Admin_ngo_messages'),
     path('Admin_donar_messages/', views.Admin_donar_messages, name='Admin_donar_messages'),
+    path('Admin_donar_donation_history/', views.Admin_donar_donation_history, name='Admin_donar_donation_history'),
 
     path('Admin_logout/',views.Admin_logout, name='Admin_logout'),
     path('Ngo_logout/',views.Ngo_logout, name='Ngo_logout'),

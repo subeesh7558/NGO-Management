@@ -17,6 +17,7 @@ class user_registration(models.Model):
                                     related_name='userregistrationdesignation', null=True, blank=True)
     firstname = models.CharField(max_length=240, null=True)
     lastname = models.CharField(max_length=240, null=True)
+    username = models.CharField(max_length=240, null=True)
     dateofbirth = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     gender = models.CharField(max_length=240, null=True)

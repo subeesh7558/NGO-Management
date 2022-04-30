@@ -55,28 +55,28 @@ def login(request):
     Donar = designation.objects.get(designation="Donar")
     Ngo = designation.objects.get(designation="Ngo")
     if request.method == 'POST':
-        email  = request.POST['email']
+        username  = request.POST['uname']
         password = request.POST['password']
-        user = authenticate(username=email,password=password)
+        user = authenticate(username=username,password=password)
         if user is not None:
             request.session['SAdm_id'] = user.id
             return redirect( 'Admin_index')
 
-        elif user_registration.objects.filter(email=request.POST['email'], password=request.POST['password'],designation=Donar.id,status="approved").exists():
+        elif user_registration.objects.filter(username=request.POST['uname'], password=request.POST['password'],designation=Donar.id,status="approved").exists():
                 
-                member=user_registration.objects.get(email=request.POST['email'], password=request.POST['password'])
+                member=user_registration.objects.get(username=request.POST['uname'], password=request.POST['password'])
                 request.session['doid'] = member.designation_id
-                request.session['usernamets1'] = member.firstname
+                request.session['usernamets1'] = member.username
                 request.session['Tnr_id'] = member.id 
                 mem=user_registration.objects.filter(id= member.id)
                 
                 return render(request,'admin_temp/Donar_index.html',{'mem':mem})
 
-        elif user_registration.objects.filter(email=request.POST['email'], password=request.POST['password'],designation=Ngo.id,status="approved").exists():
+        elif user_registration.objects.filter(username=request.POST['uname'], password=request.POST['password'],designation=Ngo.id,status="approved").exists():
                 
-                member=user_registration.objects.get(email=request.POST['email'], password=request.POST['password'])
+                member=user_registration.objects.get(username=request.POST['uname'], password=request.POST['password'])
                 request.session['ngid'] = member.designation_id
-                request.session['usernamets1'] = member.firstname
+                request.session['usernamets1'] = member.username
                 request.session['Tne_id'] = member.id 
                 mem1=user_registration.objects.filter(id= member.id)
                 
@@ -93,6 +93,7 @@ def Registration(request):
         acc = user_registration()
         acc.firstname = request.POST['fname']
         acc.lastname = request.POST['lname']
+        acc.username = request.POST['uname']
         acc.dateofbirth = request.POST['dateofbirth']
         acc.gender = request.POST['gender']
         desi_id = request.POST['desig']
@@ -220,7 +221,9 @@ def Admin_donar_messages(request):
     
     return render(request, 'admin_temp/Admin_donar_messages.html',{'cs':cs})
 
-
+def Admin_donar_donation_history(request):
+    cs = doner_registration.objects.filter(status='approved').order_by('-id')
+    return render(request, 'admin_temp/Admin_donar_donation_history.html',{'cs':cs})
 
 
 
