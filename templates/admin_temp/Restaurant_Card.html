@@ -1,0 +1,47 @@
+{%extends 'admin_temp/Restaurant_index.html'%}
+{%load static%}
+{%block content%}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-md-12 grid-margin">
+          <div class="row">
+            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+              <h3 class="font-weight-bold">Notifications</h3>
+              
+            </div>
+         
+          </div>
+        </div>
+      </div>
+   
+          <div class="row">
+            <div class="col-md-4 mb-4 stretch-card transparent">
+                <a href="{% url 'restaurent_requested_food_det' %}" class="text-decoration-none text-white">
+              <div class="card" style="background-color:rgb(207, 163, 31)">
+                <div class="card-body">
+                  <h4 class="my-3">Requsted Food</h4>
+                  <p class="fs-30 mb-4">{{count}}</p>
+                  
+                </div>
+            </a>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4 stretch-card transparent">
+              <div class="card " style="background-color: rgb(16, 189, 134);">
+                <a href="{% url 'Restaurant_req_food' %}" class="text-decoration-none text-white">
+                <div class="card-body">
+                  <h4 class="my-3">Request Food</h4>
+                  <p class="fs-30 mb-4">{{count2}}</p> 
+                 
+                </div>
+           </a>
+              </div>
+            </div>
+          </div>
+          
+  
+
+
+{% endblock %}

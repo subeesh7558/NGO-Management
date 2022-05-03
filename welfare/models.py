@@ -77,3 +77,43 @@ class message_admin(models.Model):
     def __str__(self):
         return self.message_to
 
+
+
+
+class restaurant_registration(models.Model):
+    restaurantname = models.CharField(max_length=240, null=True)
+    location = models.CharField(max_length=240, null=True)
+    username = models.CharField(max_length=240, null=True)
+    pincode = models.CharField(max_length=240, null=True)
+    district = models.CharField(max_length=240, null=True)
+    state = models.CharField(max_length=240, null=True)
+    country = models.CharField(max_length=240, null=True)
+    permanentaddress1 = models.CharField(max_length=240, null=True)
+    permanentaddress2 = models.CharField(max_length=240, null=True)
+    permanentaddress3 = models.CharField(max_length=240, null=True)
+    mobile = models.CharField(max_length=240, null=True)
+    alternativeno = models.CharField(max_length=240, null=True)
+    email = models.EmailField(max_length=240, null=True)
+    password = models.CharField(max_length=240, null=True)
+    date = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
+   
+
+    def __str__(self):
+        return self.restaurantname
+
+
+
+
+class request_food(models.Model):
+    restaurantname = models.ForeignKey(restaurant_registration, on_delete=models.DO_NOTHING, null=True, blank=True)
+    status = models.CharField(max_length=240, null=True, default='')
+    location = models.CharField(max_length=240, null=True)
+    mobile = models.CharField(max_length=240, null=True)
+    date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
+    quantity = models.CharField(max_length=240, null=True, default='')
+    reason = models.CharField(max_length=240, null=True, default='')
+   
+
+    def __str__(self):
+        return self.restaurantname

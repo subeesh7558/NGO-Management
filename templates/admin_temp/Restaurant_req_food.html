@@ -1,0 +1,110 @@
+{% extends 'admin_temp/Restaurant_index.html' %} {% load static %} {% block content %}
+
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none;
+  }
+  </style>
+  <div class="main-panel">
+    <div class="content-wrapper">
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">FOOD</h4>   
+                <form class="forms-sample" method="post" action="{% url 'Request_res_food' %}">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-md-3 col-form-label">RESTAURANT NAME</label>
+                        <div class="col-md-3">
+                            <select class="form-control text-dark" name="resname"  required>
+                                <option>--select--</option>
+                                {% for i in resto %}
+                                <option value="{{i.id}}">{{i.restaurantname}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                    </div>
+                 
+                    <div class="h-divider"></div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="table-responsive">
+                                <h5>REQUEST DETAILS</h5>
+                                <table class="table table-bordered w-80">
+                                    <thead>
+                                        <tr>
+                                            <th>LOCATION</th>
+                                            <th>CONTACT</th>
+                                            <th>QUANTITY OF THE FOOD</th>
+                                            
+                                        </tr><br>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" class="form-control" name="loc" required autocomplete="off"></td>
+                                            <td><input type="text" class="form-control" name="mobile" required autocomplete="off"></td>
+                                            <td><input type="text" class="form-control" name="qnt" id="amount" required autocomplete="off"></td>
+                                    
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-3 col-lg-3"></div>
+                        <div class="col-6 col-sm-6 col-md-3 col-lg-3"></div>
+                        <div class="col-6 col-sm-6 col-md-3 col-lg-3"></div>
+                        <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                            <input type="hidden" id="total" name="total" value="total">
+                            <button type="submit" class="btn btn-primary w-100 mt-4">Request</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(function() {
+    $("#amount, #tax").on("keyup", total);
+ 	function total() {
+ 	$("#total").val(Number($("#amount").val()) + Number($("#tax").val()));
+ 	
+	}
+ });
+</script>
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        {% if msg_success %}
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            text: '{{ msg_success }}',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(function () {
+            javascript: history.go(-2);
+        })
+        
+    </script>
+    {% endif %}
+{% endblock %}

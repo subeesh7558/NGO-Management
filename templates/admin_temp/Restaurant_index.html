@@ -27,14 +27,14 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
-        style="background-color: #343a40;height: 70px;">
-        <a class="navbar-brand brand-logo mr-5" href="Admin_index.html"><img src="{% static 'assets/images/ngo.png' %}"
+        style="background-color: #df4d4d;height: 80px;">
+        <a class="navbar-brand brand-logo mr-5" href="Admin_index.html"><img src="{% static 'assets/images/rest2.png' %}"
             class="mr-2" alt="logo" /></a>
         <a class="navbar-brand brand-logo-mini" href="Admin_index.html"><img
-            src="{% static 'assets/images/ngo 2.png' %}" alt="logo" /></a>
+            src="{% static 'assets/images/rest1.png' %}" alt="logo" /></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
-        style="background-color: #343a40; height: 70px;">
+        style="background-color: #df4d4d; height: 80px;">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
           <span class="icon-menu"></span>
         </button>
@@ -67,7 +67,7 @@
         <ul class="navbar-nav navbar-nav-right">
 
 
-          <a href="{% url 'Ngo_logout' %}" style="text-decoration: none; padding-top: 12px;">
+          <a href="{% url 'Restaurant_logout' %}" style="text-decoration: none; padding-top: 12px;">
             <li class="nav-item ">
               <button class=" btn btn-warning float-end position-relative">
                 Logout
@@ -94,38 +94,38 @@
   <div class="container-fluid page-body-wrapper">
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'Ngo_index' %}">
+        <li class="nav-item" >
+          <a class="nav-link"  href="{% url 'Restaurant_index' %}">
             <i class="icon-grid menu-icon"></i>
             <span class="menu-title">Home</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'Ngo_doner_det' %}">
+          <a class="nav-link" href="{% url 'Restaurant_Card' %}">
             <i class="icon-paper menu-icon"></i>
-            <span class="menu-title">Donar's Details</span>
+            <span class="menu-title">Request Food</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'Ngo_No_Card' %}">
+          <a class="nav-link" href="{% url 'Restaurent_Admin_messages' %}">
             <i class="icon-bell menu-icon"></i>
             <span class="menu-title">Notifications</span>
 
 
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'Ngo_donation_history'%}">
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="#">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Donation History</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'Ngo_Admin_res_approved_food_det' %}">
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="#">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Restaurant Details</span>
           </a>
-        </li>
+        </li> -->
 
 
 

@@ -1,0 +1,225 @@
+{%extends 'admin_temp/Admin_index.html'%}
+{%load static%}
+{%block content%}
+
+
+
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card ">
+            <div class="card" style="background-color:wheat">
+                <div class="card-body">
+                    <h4 class="card-title">Requested Food</h4>
+
+
+                    <input type="text" class="form-control mb-2" id="myInput" onkeyup="myFunction()"
+                        placeholder="Search for names.." title="Type in a name"><br>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl.No</th>
+                                    <th>Restaurant Name</th>
+                                    <th>Location</th>
+                                    <th>Contact</th>
+                                    <th>Quantity</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="myTable">
+
+                                {% for i in cs %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{i.restaurantname}}</td>
+                                    <td>{{i.location}}</td>
+                                    <td>{{i.mobile}}</td>
+                                    <td>{{i.quantity}}</td>
+                                    <td>{{i.date|date:"d-m-Y"}}</td>
+
+
+
+
+                                    <td>
+                                        {% if i.status == "pending" %}
+                                        <a href="#">
+                                            <button type="submit" class="btn btn-sm btn-success btn-icon-text" data-toggle="modal"
+                                            data-target="#myModalthree">
+                                                Approve
+                                            </button>
+                                        </a>
+                                    <td>
+                                        <a href="#">
+                                            <button type="submit" class="btn btn-sm btn-danger btn-icon-text" data-toggle="modal"
+                                            data-target="#myModalfour">
+                                                Reject
+                                            </button>
+                                        </a>
+
+
+                                    </td>
+
+                                    {% elif i.status == "approved" %}
+                                    <button type="submit" class="btn btn-sm btn-success btn-icon-text">
+                                        {{i.status}}
+                                    </button>
+
+                                    {% else %}
+                                    <button type="submit" class="btn btn-sm btn-danger btn-icon-text">
+                                        {{i.status}}
+                                    </button>
+                                    </td>
+
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {% for i in cs %}
+      <!-- Modal Number-1-->
+      <div class="modal fade" id="myModalthree" role="dialog">
+        <div class="modal-dialog">
+    
+            <!-- Modal content-->
+            <div class="modal-content" style="background-color: wheat;">
+                <div class="modal-header">
+                    <button type="button" class="close" style="color: rgb(13, 13, 13);"  data-dismiss="modal">&times;</button>
+                    
+                </div>
+                <h4 style="margin-left: 180px;" class="modal-title" >Approved Reason</h4>
+                <!-- Modal body -->
+                <div class="modal-body"  style="background-color: wheat;">
+                    <form action="{% url 'Admin_reply_restaurent' i.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card"  style="background-color: wheat;">
+                            <div class="card-body">
+                                <div class="row p-2">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center">
+                                        <textarea class="col-12 col-sm-12 col-md-12 col-lg-12 form-control  text-light"
+                                            style="height: 200px; background-color: #413434; " name="reply"
+                                            rows="4"> </textarea>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center pb-3">
+                                    <button type="submit" class="btn btn-primary btn-icon-text ">
+    
+                                        Send
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </form>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+{% endfor %}
+
+
+{% for i in cs %}
+    <!-- Modal Number-2-->
+    <div class="modal fade" id="myModalfour" role="dialog">
+      <div class="modal-dialog">
+  
+          <!-- Modal content-->
+          <div class="modal-content" style="background-color: wheat;">
+              <div class="modal-header">
+                  <button type="button" class="close" style="color: rgb(13, 13, 13);"  data-dismiss="modal">&times;</button>
+                  
+              </div>
+              <h4 style="margin-left: 180px;" class="modal-title" >Reject Reason</h4>
+              <!-- Modal body -->
+              <div class="modal-body" style="background-color:wheat">
+                  <form action="{% url 'Admin_reason_restaurent' i.id %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="card" style="background-color: wheat">
+                          <div class="card-body">
+                              <div class="row p-2">
+                                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center">
+                                      <textarea class="col-12 col-sm-12 col-md-12 col-lg-12 form-control  text-light"
+                                          style="height: 200px; background-color: #413434; " name="replytwo"
+                                          rows="4"> </textarea>
+                                  </div>
+                              </div>
+                              <br>
+                              <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center pb-3">
+                                  <button type="submit" class="btn btn-primary btn-icon-text ">
+  
+                                      Send
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+  
+                  </form>
+  
+              </div>
+  
+          </div>
+  
+      </div>
+  </div>
+{% endfor %}
+
+
+
+        <script>
+            function myFunction() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('table tr').click(function () {
+                    window.location = $(this).data('href');
+                    return false;
+                });
+            });
+        </script>
+
+
+
+
+        {% endblock %}

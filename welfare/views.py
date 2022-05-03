@@ -41,6 +41,16 @@ def  loginwelfare(request):
     return render(request, 'welfare_temp/loginwelfare.html')
 
 
+
+def reg_rest(request):
+    return render(request, 'welfare_temp/reg_rest.html')                                             
+
+
+def loginrest(request):
+    return render(request, 'welfare_temp/loginrest.html')
+
+
+
 def ngo(request):
     return redirect('/ngo/')
 
@@ -81,6 +91,15 @@ def login(request):
                 mem1=user_registration.objects.filter(id= member.id)
                 
                 return render(request,'admin_temp/Ngo_index.html',{'mem1':mem1})
+
+        elif restaurant_registration.objects.filter(username=request.POST['uname'], password=request.POST['password']).exists():
+                member=restaurant_registration.objects.get(username=request.POST['uname'], password=request.POST['password'])
+                request.session['uname'] = member.username
+                request.session['Tne_id'] = member.id 
+                mem3=restaurant_registration.objects.filter(id= member.id)
+                
+                return render(request,'admin_temp/Restaurant_index.html',{'mem3':mem3})
+
         else:
             context = {'msg_error': 'Invalid data'}
             return render(request, 'welfare_temp/loginwelfare.html', context)
@@ -116,6 +135,44 @@ def Registration(request):
     else:
       messages.info(request, 'Password doesnt match. Register Again')
       return redirect('reg')
+
+
+
+
+
+
+
+
+
+def Registration2(request):
+    if request.method == 'POST':
+        acc = restaurant_registration()
+        acc.restaurantname = request.POST['rname']
+        acc.location = request.POST['loname']
+        acc.username = request.POST['uname']
+        acc.email = request.POST['email']
+        acc.password = request.POST['password']
+        acc.mobile = request.POST['mobile']
+        acc.alternativeno = request.POST['alt_no']
+        acc.pincode = request.POST['pincode']
+        acc.district = request.POST['district']
+        acc.state = request.POST['state']
+        acc.country = request.POST['country']
+        acc.permanentaddress1 = request.POST['address1']
+        acc.permanentaddress2 = request.POST['address2']
+        acc.permanentaddress3 = request.POST['address3']
+        acc.date = datetime.now()
+        acc.save()
+        return redirect('loginwelfare')
+    else:
+      messages.info(request, 'Password doesnt match. Register Again')
+      return redirect('reg_rest')
+
+
+
+
+
+
 
 
 
@@ -224,6 +281,23 @@ def Admin_donar_messages(request):
 def Admin_donar_donation_history(request):
     cs = doner_registration.objects.filter(status='approved').order_by('-id')
     return render(request, 'admin_temp/Admin_donar_donation_history.html',{'cs':cs})
+
+
+def Admin_restaurent_req_food_det(request):
+    cs = request_food.objects.all().order_by('-id')
+    return render(request, 'admin_temp/Admin_restaurent_req_food_det.html',{'cs': cs})
+
+def Admin_reply_restaurent(request,id):
+    if request.method == 'POST':
+        rep=request.POST.get('reply')
+        pro_sts = request_food.objects.filter(id=id).update(reason= rep,status ='approved')
+    return redirect('Admin_restaurent_req_food_det')
+
+def Admin_reason_restaurent(request,id):
+    if request.method == 'POST':
+        rereas=request.POST.get('replytwo')
+        pro_sts = request_food.objects.filter(id=id).update(reason= rereas,status ='rejected')
+    return redirect('Admin_restaurent_req_food_det')
 
 
 
@@ -355,3 +429,57 @@ def Ngo_donation_history(request):
     cs = doner_registration.objects.filter(status='approved').order_by('-id')
     return render(request, 'admin_temp/Ngo_donation_history.html',{'cs':cs})
 
+
+
+def Ngo_Admin_res_approved_food_det(request):
+    cs = request_food.objects.filter(status='approved').order_by('-id')
+    return render(request, 'admin_temp/Ngo_Admin_res_approved_food_det.html',{'cs': cs})
+
+
+
+def Restaurant_logout(request):
+    request.session.flush()
+    return redirect("/")
+
+
+def Restaurant_index(request):
+    return render(request, 'admin_temp/Restaurant_index.html')  
+
+
+def Restaurant_Card(request):
+    
+    return render(request, 'admin_temp/Restaurant_Card.html')  
+
+
+def Restaurant_req_food(request):
+    resto=restaurant_registration.objects.all()
+    return render(request, 'admin_temp/Restaurant_req_food.html',{'resto':resto})  
+
+
+
+def Request_res_food(request):
+    if request.method == 'POST':
+        acc = request_food()
+        res_id = request.POST['resname']
+        acc.restaurantname_id = res_id
+        acc.date = datetime.now()
+        acc.status = "pending"
+        acc.reason = "pending"
+        acc.mobile = request.POST['mobile']
+        acc.location = request.POST['loc']
+        acc.quantity = request.POST['qnt']
+        acc.save()
+        return redirect('Restaurant_req_food')
+
+
+
+
+
+def restaurent_requested_food_det(request):
+    cs = request_food.objects.all()
+    return render(request, 'admin_temp/restaurent_requested_food_det.html',{'cs': cs})
+
+
+def Restaurent_Admin_messages(request):
+    cs = request_food.objects.all()
+    return render(request, 'admin_temp/Restaurent_Admin_messages.html',{'cs': cs})
