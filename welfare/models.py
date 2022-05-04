@@ -112,6 +112,7 @@ class request_food(models.Model):
     mobile = models.CharField(max_length=240, null=True)
     date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
     quantity = models.CharField(max_length=240, null=True, default='')
+    cookedtime = models.CharField(max_length=240, null=True, default='')
     reason = models.CharField(max_length=240, null=True, default='')
    
 

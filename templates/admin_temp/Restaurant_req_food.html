@@ -18,12 +18,7 @@
                     <div class="form-group row">
                         <label for="exampleInputUsername2" class="col-md-3 col-form-label">RESTAURANT NAME</label>
                         <div class="col-md-3">
-                            <select class="form-control text-dark" name="resname"  required>
-                                <option>--select--</option>
-                                {% for i in resto %}
-                                <option value="{{i.id}}">{{i.restaurantname}}</option>
-                                {% endfor %}
-                            </select>
+                            <input class="form-control" id="exampleInputUsername2" disabled name="resname" value="{{resto.restaurantname}}">
                         </div>
                         
                     </div>
@@ -39,6 +34,7 @@
                                             <th>LOCATION</th>
                                             <th>CONTACT</th>
                                             <th>QUANTITY OF THE FOOD</th>
+                                            <th>Cooked Time</th>
                                             
                                         </tr><br>
                                     </thead>
@@ -47,7 +43,15 @@
                                             <td><input type="text" class="form-control" name="loc" required autocomplete="off"></td>
                                             <td><input type="text" class="form-control" name="mobile" required autocomplete="off"></td>
                                             <td><input type="text" class="form-control" name="qnt" id="amount" required autocomplete="off"></td>
-                                    
+                                            <td>
+                                                <select class="form-control text-dark" name="ctime" required>
+                                                    <option>--select--</option>
+                                                    <option value="Morning" class="text-dark">Morning</option>
+                                                    <option value="Noon" class="text-dark">Noon</option>
+                                                    <option value="After Noon" class="text-dark">After Noon</option>
+                                                </select>
+                                              </td>
+                                            
                                         </tr>
                                     </tbody>
                                 </table>

@@ -36,7 +36,9 @@
                                     <th>Location</th>
                                     <th>Contact</th>
                                     <th>Quantity</th>
+                                    <th>Cooked Time</th>
                                     <th>Date</th>
+                                    
                                     <th>Status</th>
                                     
                                 </tr>
@@ -50,6 +52,7 @@
                                     <td>{{i.location}}</td>
                                     <td>{{i.mobile}}</td>
                                     <td>{{i.quantity}}</td>
+                                    <td>{{i.cookedtime}}</td>
                                     <td>{{i.date|date:"d-m-Y"}}</td>
                                     
 
@@ -58,17 +61,17 @@
                                     <td>
 
                                         {% if i.status == "approved" %}
-                                        <button type="submit" class="btn btn-sm btn-success btn-icon-text">
+                                        <button type="submit" class="btn  btn-success btn-icon-text">
                                             {{i.status}}
                                         </button>
                     
                                         {% elif i.status == "rejected" %}
-                                        <button type="submit" class="btn btn-sm btn-danger btn-icon-text">
+                                        <button type="submit" class="btn  btn-danger btn-icon-text">
                                             {{i.status}}
                                         </button>
                                       
                                         {% else %}
-                                        <button type="submit" class="btn btn-sm btn-warning btn-icon-text">
+                                        <button type="submit" class="btn  btn-warning btn-icon-text">
                                             {{i.status}}
                                         </button>
                                         </td>

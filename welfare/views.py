@@ -95,7 +95,7 @@ def login(request):
         elif restaurant_registration.objects.filter(username=request.POST['uname'], password=request.POST['password']).exists():
                 member=restaurant_registration.objects.get(username=request.POST['uname'], password=request.POST['password'])
                 request.session['uname'] = member.username
-                request.session['Tne_id'] = member.id 
+                request.session['re_id'] = member.id 
                 mem3=restaurant_registration.objects.filter(id= member.id)
                 
                 return render(request,'admin_temp/Restaurant_index.html',{'mem3':mem3})
@@ -285,6 +285,7 @@ def Admin_donar_donation_history(request):
 
 def Admin_restaurent_req_food_det(request):
     cs = request_food.objects.all().order_by('-id')
+    ngo=user_registration.objects.all()
     return render(request, 'admin_temp/Admin_restaurent_req_food_det.html',{'cs': cs})
 
 def Admin_reply_restaurent(request,id):
@@ -432,6 +433,8 @@ def Ngo_donation_history(request):
 
 
 def Ngo_Admin_res_approved_food_det(request):
+   
+    
     cs = request_food.objects.filter(status='approved').order_by('-id')
     return render(request, 'admin_temp/Ngo_Admin_res_approved_food_det.html',{'cs': cs})
 
@@ -443,31 +446,48 @@ def Restaurant_logout(request):
 
 
 def Restaurant_index(request):
-    return render(request, 'admin_temp/Restaurant_index.html')  
+    if 're_id' in request.session:
+        if request.session.has_key('re_id'):
+            re_id = request.session['re_id']
+            mem1 = user_registration.objects.filter(id=re_id)
+    return render(request, 'admin_temp/Restaurant_index.html',{'mem1':mem1})  
 
 
 def Restaurant_Card(request):
-    
-    return render(request, 'admin_temp/Restaurant_Card.html')  
+    if 're_id' in request.session:
+        if request.session.has_key('re_id'):
+            re_id = request.session['re_id']
+            mem1 = user_registration.objects.filter(id=re_id)
+    count2=request_food.objects.filter(restaurantname_id=re_id).count()
+    return render(request, 'admin_temp/Restaurant_Card.html',{'mem1':mem1,'count2':count2})  
 
 
 def Restaurant_req_food(request):
-    resto=restaurant_registration.objects.all()
-    return render(request, 'admin_temp/Restaurant_req_food.html',{'resto':resto})  
+    if 're_id' in request.session:
+        if request.session.has_key('re_id'):
+            re_id = request.session['re_id']
+            mem1 = user_registration.objects.filter(id=re_id)
+    resto=restaurant_registration.objects.get(id=re_id)
+    return render(request, 'admin_temp/Restaurant_req_food.html',{'resto':resto,'mem1':mem1})  
 
 
 
 def Request_res_food(request):
+    if 're_id' in request.session:
+        if request.session.has_key('re_id'):
+            re_id = request.session['re_id']
+            mem1 = user_registration.objects.filter(id=re_id)
+    resto=restaurant_registration.objects.get(id=re_id)
     if request.method == 'POST':
         acc = request_food()
-        res_id = request.POST['resname']
-        acc.restaurantname_id = res_id
+        acc.restaurantname_id = re_id
         acc.date = datetime.now()
         acc.status = "pending"
         acc.reason = "pending"
         acc.mobile = request.POST['mobile']
         acc.location = request.POST['loc']
         acc.quantity = request.POST['qnt']
+        acc.cookedtime = request.POST['ctime']
         acc.save()
         return redirect('Restaurant_req_food')
 
@@ -476,10 +496,18 @@ def Request_res_food(request):
 
 
 def restaurent_requested_food_det(request):
-    cs = request_food.objects.all()
-    return render(request, 'admin_temp/restaurent_requested_food_det.html',{'cs': cs})
+    if 're_id' in request.session:
+        if request.session.has_key('re_id'):
+            re_id = request.session['re_id']
+            mem1 = user_registration.objects.filter(id=re_id)
+    cs = request_food.objects.filter(restaurantname_id=re_id).order_by('-id')
+    return render(request, 'admin_temp/restaurent_requested_food_det.html',{'cs': cs,'mem1':mem1})
 
 
 def Restaurent_Admin_messages(request):
-    cs = request_food.objects.all()
-    return render(request, 'admin_temp/Restaurent_Admin_messages.html',{'cs': cs})
+    if 're_id' in request.session:
+        if request.session.has_key('re_id'):
+            re_id = request.session['re_id']
+            mem1 = user_registration.objects.filter(id=re_id)
+    cs = request_food.objects.filter(restaurantname_id=re_id).filter(status='approved').order_by('-id')
+    return render(request, 'admin_temp/Restaurent_Admin_messages.html',{'cs': cs,'mem1':mem1})

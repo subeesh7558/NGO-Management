@@ -33,10 +33,9 @@
                                 <tr>
                                     <th>Sl.No</th>
                                     <th>Restaurant Name</th>
-                                    <th>Location</th>
-                                    <th>Contact</th>
-                                    <th>Quantity</th>
+                                    
                                     <th>Date</th>
+                                    <th>Status</th>
                                     <th>Replay</th>
                                 </tr>
                             </thead>
@@ -47,11 +46,28 @@
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{i.restaurantname}}</td>
-                                    <td>{{i.location}}</td>
-                                    <td>{{i.mobile}}</td>
-                                    <td>{{i.quantity}}</td>
+                                    
                                     <td>{{i.date|date:"d-m-Y"}}</td>
-                                    <td>{{i.reason}}</td>
+                                    <td>
+
+                                        {% if i.status == "approved" %}
+                                        <button type="submit" class="btn  btn-success btn-icon-text">
+                                            {{i.status}}
+                                        </button>
+                    
+                                        {% elif i.status == "rejected" %}
+                                        <button type="submit" class="btn  btn-danger btn-icon-text">
+                                            {{i.status}}
+                                        </button>
+                                
+                                        </td>
+                                        {% endif %}
+                                    <td>
+                                        <button type="button" class=" btn btn-primary" data-toggle="modal"
+                                            data-target="#myModalfive{{i.id}}">
+                                           View
+
+                                        </button></td>
 
                                         {% endfor %}
                             </tbody>
@@ -61,9 +77,31 @@
             </div>
         </div>
 
+        {% for i in cs %}
+        <div class="modal fade" id="myModalfive{{i.id}}" role="dialog">
+            <div class="modal-dialog  modal-sm">
 
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color: rgb(255, 141, 121);">
+                    <div class="modal-header">
+                        <button type="button" class="close" style="color: rgb(13, 13, 13);"
+                            data-dismiss="modal">&times;</button>
 
- 
+                    </div>
+                    <!-- <h4 style="margin-left: 140px;" class="modal-title"> Replay To Admin</h4> -->
+                    <!-- Modal body -->
+                    <div class="modal-body" style="background-color: rgb(255, 141, 121);">
+                        
+                       
+                        {{i.reason}}
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
 
         <script>
             function myFunction() {
@@ -93,7 +131,6 @@
                 });
             });
         </script>
-
 
 
 
