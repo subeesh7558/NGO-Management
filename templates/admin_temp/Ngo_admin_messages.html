@@ -56,7 +56,8 @@
 
                                         </button>
                                         {% else %}
-                                        <button type="button" class=" btn btn-success">
+                                        <button type="button" class=" btn btn-success" data-toggle="modal"
+                                        data-target="#myModalt{{i.id}}">
                                             Replayed
 
                                         </button>
@@ -106,6 +107,56 @@
                                             Send
                                         </button>
                                     </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+        {% for i in cs %}
+        <div class="modal fade" id="myModalt{{i.id}}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color: wheat;">
+                    <div class="modal-header">
+                        <button type="button" class="close" style="color: rgb(13, 13, 13);"
+                            data-dismiss="modal">&times;</button>
+
+                    </div>
+                    <h4 style="margin-left: 210px;" class="modal-title"> Replay</h4>
+                    <!-- Modal body -->
+                    <div class="modal-body" style="background-color: wheat;">
+                        <form action="{% url 'Ngo_admin_messages_replay' i.id %}" method="post"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card" style="background-color: wheat;">
+                                <div class="card-body">
+                                    <div class="row p-2">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center">
+                                            <textarea
+                                                class="col-12 col-sm-12 col-md-12 col-lg-12 form-control  text-light"
+                                                style="height: 200px; background-color: #413434; " name="rep"
+                                                rows="4"> {{i.replay}}</textarea>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <!-- <div
+                                        class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center pb-3">
+                                        <button type="submit" class="btn btn-primary btn-icon-text ">
+
+                                            Send
+                                        </button>
+                                    </div> -->
                                 </div>
                             </div>
 

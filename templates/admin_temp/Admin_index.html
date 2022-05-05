@@ -90,8 +90,8 @@
         </div>
       </div>
       <!-- partial -->
-      <!-- partial:partials/_sidebar.html -->
-      <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html --> 
+      <div class="container-fluid page-body-wrapper site-blocks-cover inner-page-cover overlay" style="background-image: url({% static 'assets/images/admingo10.jpg' %});">
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
@@ -155,6 +155,14 @@
                     <form action="{% url 'Admin_Msg_doner' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="card"  style="background-color: wheat;">
+                          <select class="form-control" style="color:rgb(18, 17, 17);" name="doners">
+                                    
+                            <option value="">-</option>
+                            {% for i in don %}
+                            <option value="{{i.id}}">{{i.firstname}}</option>
+                            {% endfor %}
+                           
+                          </select>
                             <div class="card-body">
                                 <div class="row p-2">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center">
@@ -162,6 +170,7 @@
                                             style="height: 200px; background-color: #413434; " name="msg1"
                                             rows="4"> </textarea>
                                     </div>
+                                 
                                 </div>
                                 <br>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-center pb-3">

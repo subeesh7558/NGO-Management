@@ -180,8 +180,9 @@ def Registration2(request):
 
 
 def Admin_index(request):
-    
-    return render(request, 'admin_temp/Admin_index.html')
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
+    return render(request, 'admin_temp/Admin_index.html',{'don':don})
 
 
 
@@ -189,13 +190,17 @@ def Admin_index(request):
 
 
 def Admin_Msg_doner(request):
+   
     design=designation.objects.get(designation="Donar")
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     if request.method == 'POST':
         vars = message_admin()
         vars.message=request.POST.get('msg1')
         vars.date=datetime.now()
         vars.replay = "pending"
         vars.message_to_id=design.id
+        donr_id = request.POST.get("doners")
+        vars.donuser_id = donr_id
         vars.save()
     return redirect('Admin_index')
 
@@ -219,20 +224,26 @@ def nadmin(request):
     return render(request, 'admin_temp/nadmin.html')
 
 def Admin_doner_det(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     des = designation.objects.get(designation='Donar')
     cs = user_registration.objects.filter(designation_id=des).filter(status='approved').order_by('-id')
-    return render(request, 'admin_temp/Admin_doner_det.html',{'cs': cs})
+    return render(request, 'admin_temp/Admin_doner_det.html',{'cs': cs,'don':don})
 
 def Admin_ngo_det(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     des = designation.objects.get(designation='Ngo')
     cs = user_registration.objects.filter(designation_id=des).filter(status='approved').order_by('-id')
-    return render(request, 'admin_temp/Admin_ngo_det.html',{'cs':cs})
+    return render(request, 'admin_temp/Admin_ngo_det.html',{'cs':cs,'don':don})
 
 def Admin_nofification(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     des = designation.objects.all()
     cs = user_registration.objects.all().order_by('-id')
     count=user_registration.objects.all().count()
-    return render(request, 'admin_temp/Admin_nofification.html',{'cs':cs,'count':count})
+    return render(request, 'admin_temp/Admin_nofification.html',{'cs':cs,'count':count,'don':don})
 
 
 def Admin_reject(request,id):
@@ -253,40 +264,52 @@ def Admin_logout(request):
 
 
 def Admin_No_Card(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     des = designation.objects.get(designation='Ngo')
     count2=user_registration.objects.all().count()
-    return render(request, 'admin_temp/Admin_No_Card.html',{'count2':count2})
+    return render(request, 'admin_temp/Admin_No_Card.html',{'count2':count2,'don':don})
 
 def Admin_Notification_des_Card(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     des = designation.objects.get(designation='Ngo')
     count=message_admin.objects.filter(message_to=des).count()
     des2 = designation.objects.get(designation='Donar')
     count2 = message_admin.objects.filter(message_to_id=des2).count()
-    return render(request, 'admin_temp/Admin_Notification_des_Card.html',{'count':count,'count2':count2})
+    return render(request, 'admin_temp/Admin_Notification_des_Card.html',{'count':count,'count2':count2,'don':don})
 
 
 
 def Admin_ngo_messages(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     des = designation.objects.get(designation='Ngo')
     cs = message_admin.objects.filter(message_to_id=des).order_by('-id')
     
-    return render(request, 'admin_temp/Admin_ngo_messages.html',{'cs':cs})
+    return render(request, 'admin_temp/Admin_ngo_messages.html',{'cs':cs,'don':don})
 
 def Admin_donar_messages(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     des = designation.objects.get(designation='Donar')
     cs = message_admin.objects.filter(message_to_id=des).order_by('-id')
     
-    return render(request, 'admin_temp/Admin_donar_messages.html',{'cs':cs})
+    return render(request, 'admin_temp/Admin_donar_messages.html',{'cs':cs,'don':don})
 
 def Admin_donar_donation_history(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     cs = doner_registration.objects.filter(status='approved').order_by('-id')
-    return render(request, 'admin_temp/Admin_donar_donation_history.html',{'cs':cs})
+    return render(request, 'admin_temp/Admin_donar_donation_history.html',{'cs':cs,'don':don})
 
 
 def Admin_restaurent_req_food_det(request):
+    design = designation.objects.get(designation='Donar')
+    don = user_registration.objects.filter(designation_id=design).filter(status='approved')
     cs = request_food.objects.all().order_by('-id')
     ngo=user_registration.objects.all()
-    return render(request, 'admin_temp/Admin_restaurent_req_food_det.html',{'cs': cs})
+    return render(request, 'admin_temp/Admin_restaurent_req_food_det.html',{'cs': cs,'don':don})
 
 def Admin_reply_restaurent(request,id):
     if request.method == 'POST':
@@ -308,14 +331,27 @@ def Donar_logout(request):
 
 
 def Donar_index(request):
-    return render(request, 'admin_temp/Donar_index.html')   
+    if 'Tnr_id' in request.session:
+        if request.session.has_key('Tnr_id'):
+            Tnr_id = request.session['Tnr_id']
+            mem4 = user_registration.objects.filter(id=Tnr_id)
+    adm=user_registration.objects.get(id=Tnr_id)
+    return render(request, 'admin_temp/Donar_index.html',{'mem4':mem4,'adm':adm})   
 
 def Donar_donation(request):
-        
-    return render(request, 'admin_temp/Donar_donation.html')
+    if 'Tnr_id' in request.session:
+        if request.session.has_key('Tnr_id'):
+            Tnr_id = request.session['Tnr_id']
+            mem4 = user_registration.objects.filter(id=Tnr_id)
+    adm=user_registration.objects.get(id=Tnr_id)
+    return render(request, 'admin_temp/Donar_donation.html',{'adm':adm})
 
 
 def Donar_donation_registration(request):
+    if 'Tnr_id' in request.session:
+        if request.session.has_key('Tnr_id'):
+            Tnr_id = request.session['Tnr_id']
+            mem4 = user_registration.objects.filter(id=Tnr_id)
         if request.session.has_key('doid'):
             doid = request.session['doid']
       
@@ -324,6 +360,7 @@ def Donar_donation_registration(request):
                 acc.firstname = request.POST['fname']
                 acc.lastname = request.POST['lname']
                 acc.designation_id=doid
+                acc.duser_id = Tnr_id
                 acc.email = request.POST['email']
                 acc.mobile = request.POST['mobile']
                 acc.pincode = request.POST['pincode']
@@ -342,20 +379,34 @@ def Donar_donation_registration(request):
 
 
 def Donar_donation_det(request):
-    cs = doner_registration.objects.all().order_by('-id')
-    return render(request, 'admin_temp/Donar_donation_det.html',{'cs':cs}) 
+    if 'Tnr_id' in request.session:
+        if request.session.has_key('Tnr_id'):
+            Tnr_id = request.session['Tnr_id']
+            mem4 = user_registration.objects.filter(id=Tnr_id)
+    cs = doner_registration.objects.filter(duser_id=Tnr_id).order_by('-id')
+    adm=user_registration.objects.get(id=Tnr_id)
+    return render(request, 'admin_temp/Donar_donation_det.html',{'cs':cs,'mem4':mem4,'adm':adm}) 
 
 
 def Doner_req_det(request):
+    if 'Tnr_id' in request.session:
+        if request.session.has_key('Tnr_id'):
+            Tnr_id = request.session['Tnr_id']
+            mem4 = user_registration.objects.filter(id=Tnr_id)
     des = designation.objects.get(designation='Donar')
-    cs = doner_registration.objects.all().order_by('-id')
-    return render(request, 'admin_temp/Doner_req_det.html',{'cs': cs})
+    cs = doner_registration.objects.filter(duser_id=Tnr_id).order_by('-id')
+    adm=user_registration.objects.get(id=Tnr_id)
+    return render(request, 'admin_temp/Doner_req_det.html',{'cs': cs,'meme4':mem4,'adm':adm})
 
 def Doner_admin_message(request):
+    if 'Tnr_id' in request.session:
+        if request.session.has_key('Tnr_id'):
+            Tnr_id = request.session['Tnr_id']
+            mem4 = user_registration.objects.filter(id=Tnr_id)
     des = designation.objects.get(designation='Donar')
-    cs = message_admin.objects.filter(message_to_id=des).order_by('-id')
-    
-    return render(request, 'admin_temp/Doner_admin_message.html',{'cs':cs})
+    cs = message_admin.objects.filter(donuser_id=Tnr_id).order_by('-id')
+    adm=user_registration.objects.get(id=Tnr_id)
+    return render(request, 'admin_temp/Doner_admin_message.html',{'cs':cs,'mem4':mem4,'adm':adm})
 
 def Donar_admin_messages_replay(request,id):
     if request.method == 'POST':
@@ -450,7 +501,8 @@ def Restaurant_index(request):
         if request.session.has_key('re_id'):
             re_id = request.session['re_id']
             mem1 = user_registration.objects.filter(id=re_id)
-    return render(request, 'admin_temp/Restaurant_index.html',{'mem1':mem1})  
+    rest=restaurant_registration.objects.get(id=re_id)
+    return render(request, 'admin_temp/Restaurant_index.html',{'mem1':mem1,'rest':rest})  
 
 
 def Restaurant_Card(request):
@@ -459,7 +511,8 @@ def Restaurant_Card(request):
             re_id = request.session['re_id']
             mem1 = user_registration.objects.filter(id=re_id)
     count2=request_food.objects.filter(restaurantname_id=re_id).count()
-    return render(request, 'admin_temp/Restaurant_Card.html',{'mem1':mem1,'count2':count2})  
+    rest=restaurant_registration.objects.get(id=re_id)
+    return render(request, 'admin_temp/Restaurant_Card.html',{'mem1':mem1,'count2':count2,'rest':rest})  
 
 
 def Restaurant_req_food(request):
@@ -468,7 +521,8 @@ def Restaurant_req_food(request):
             re_id = request.session['re_id']
             mem1 = user_registration.objects.filter(id=re_id)
     resto=restaurant_registration.objects.get(id=re_id)
-    return render(request, 'admin_temp/Restaurant_req_food.html',{'resto':resto,'mem1':mem1})  
+    rest=restaurant_registration.objects.get(id=re_id)
+    return render(request, 'admin_temp/Restaurant_req_food.html',{'resto':resto,'mem1':mem1,'rest':rest})  
 
 
 
@@ -501,7 +555,8 @@ def restaurent_requested_food_det(request):
             re_id = request.session['re_id']
             mem1 = user_registration.objects.filter(id=re_id)
     cs = request_food.objects.filter(restaurantname_id=re_id).order_by('-id')
-    return render(request, 'admin_temp/restaurent_requested_food_det.html',{'cs': cs,'mem1':mem1})
+    rest=restaurant_registration.objects.get(id=re_id)
+    return render(request, 'admin_temp/restaurent_requested_food_det.html',{'cs': cs,'mem1':mem1,'rest':rest})
 
 
 def Restaurent_Admin_messages(request):
@@ -510,4 +565,5 @@ def Restaurent_Admin_messages(request):
             re_id = request.session['re_id']
             mem1 = user_registration.objects.filter(id=re_id)
     cs = request_food.objects.filter(restaurantname_id=re_id).filter(status='approved').order_by('-id')
-    return render(request, 'admin_temp/Restaurent_Admin_messages.html',{'cs': cs,'mem1':mem1})
+    rest=restaurant_registration.objects.get(id=re_id)
+    return render(request, 'admin_temp/Restaurent_Admin_messages.html',{'cs': cs,'mem1':mem1,'rest':rest})

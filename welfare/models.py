@@ -44,6 +44,7 @@ class user_registration(models.Model):
 
 class doner_registration(models.Model):
     designation = models.ForeignKey(designation, on_delete=models.DO_NOTHING, null=True, blank=True)
+    duser = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING, null=True, blank=True)
     firstname = models.CharField(max_length=240, null=True)
     lastname = models.CharField(max_length=240, null=True)
     pincode = models.CharField(max_length=240, null=True)
@@ -68,6 +69,7 @@ class doner_registration(models.Model):
 
 
 class message_admin(models.Model):
+    donuser = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING, null=True, blank=True)
     message_to = models.ForeignKey(designation, on_delete=models.DO_NOTHING,null=True, blank=True)
     date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
     message = models.TextField()
@@ -81,6 +83,7 @@ class message_admin(models.Model):
 
 
 class restaurant_registration(models.Model):
+    
     restaurantname = models.CharField(max_length=240, null=True)
     location = models.CharField(max_length=240, null=True)
     username = models.CharField(max_length=240, null=True)
