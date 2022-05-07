@@ -17,6 +17,7 @@ urlpatterns = [
     path('Registration/', views.Registration, name='Registration'),
     path('Registration2/', views.Registration2, name='Registration2'),
     path('donation/',views.donation, name='donation'),
+    path('Forgot_password/',views.Forgot_password, name='Forgot_password'),
 
 
     # path('ngoo/', views.ngo, name="ngoo"),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('Admin_restaurent_req_food_det/', views.Admin_restaurent_req_food_det, name='Admin_restaurent_req_food_det'),
     path('Admin_reply_restaurent/<int:id>', views.Admin_reply_restaurent, name='Admin_reply_restaurent'),
     path('Admin_reason_restaurent/<int:id>', views.Admin_reason_restaurent, name='Admin_reason_restaurent'),
+    path('Admin_Accountsett/', views.Admin_Accountsett, name='Admin_Accountsett'),
 
 
     path('Admin_logout/',views.Admin_logout, name='Admin_logout'),
@@ -57,6 +59,8 @@ urlpatterns = [
     path('Ngo_admin_messages/', views.Ngo_admin_messages, name='Ngo_admin_messages'),
     path('Ngo_admin_messages_replay/<int:id>', views.Ngo_admin_messages_replay, name='Ngo_admin_messages_replay'),
     path('Ngo_Admin_res_approved_food_det/', views.Ngo_Admin_res_approved_food_det, name='Ngo_Admin_res_approved_food_det'),
+    path('Ngo_Accsetting/', views.Ngo_Accsetting, name='Ngo_Accsetting'),
+    path('Ngo_Changepwd/<int:id>', views.Ngo_Changepwd, name='Ngo_Changepwd'),
 
 
 
@@ -69,6 +73,8 @@ urlpatterns = [
     path('Doner_req_det/', views.Doner_req_det, name='Doner_req_det'),
     path('Doner_admin_message/', views.Doner_admin_message, name='Doner_admin_message'),
     path('Donar_admin_messages_replay/<int:id>', views.Donar_admin_messages_replay, name='Donar_admin_messages_replay'),
+    path('Doner_Accsetting/', views.Doner_Accsetting, name='Doner_Accsetting'),
+    path('Doner_Changepwd/<int:id>', views.Doner_Changepwd, name='Doner_Changepwd'),
 
 
 
@@ -80,4 +86,6 @@ urlpatterns = [
     path('Request_res_food/',views.Request_res_food, name='Request_res_food'),
     path('restaurent_requested_food_det/',views.restaurent_requested_food_det, name='restaurent_requested_food_det'),
     path('Restaurent_Admin_messages/',views.Restaurent_Admin_messages, name='Restaurent_Admin_messages'),
+    path('Restaurent_Accsetting/', views.Restaurent_Accsetting, name='Restaurent_Accsetting'),
+    path('Restaurent_Changepwd/<int:id>', views.Restaurent_Changepwd, name='Restaurent_Changepwd'),
 ]

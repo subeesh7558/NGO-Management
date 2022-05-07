@@ -1,0 +1,117 @@
+{%extends 'admin_temp/Admin_index.html'%}
+{%load static%}
+{%block content%}
+<style>
+	@media (min-width: 576px){
+	
+    .d-sm-flex {
+       display: inline-flex !important;
+}}
+</style>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="main-panel">
+		<div class="content-wrapper">
+			<div class="bg-white shadow rounded-lg d-block d-sm-flex ">
+				<div class="profile-tab-nav border-right ">
+					<div class="p-4">
+						<div class="img-circle text-center mb-3">
+							<img src="{% static 'assets/images/admin.png' %}" alt="Image" class="circle-loader">
+						</div>
+						<h4 class="text-center">Admin</h4>
+					</div>
+					<div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+						
+                        <a class="nav-link active pr-lg-5" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="true">
+							<i class="fa fa-key mr-1">Password</i> 
+							
+						</a>
+						
+                         
+					</div>
+				</div>
+
+					<div class="container">
+					<div class="tab-pane fade show active" id="password" role="tabpanel" aria-labelledby="password-tab">
+						<form action="" method="post" enctype="multipart/form-data">
+							{% csrf_token %} 
+						<h3 class="mb-4 mt-2 ml-3 mr-2">Password Settings</h3>
+						
+						<div class="row">
+							<div class="col-md-6 ">
+								<div class="form-group">
+								  	<label class="m-2">New password</label>
+								  	<input type="password" name="newPassword" class="form-control" id="newpass" >
+								</div>
+							</div>
+							<div class="col-md-6 ">
+								<div class="form-group">
+									<label class="m-2">Confirm password</label>
+								  	<input type="password" name="confirmPassword" class="form-control" id="conpassword">
+								</div>
+							</div>
+							
+							<br>
+          <span id='message' class="ml-5"></span>
+                <br>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+     <script>
+ $('#conpassword').on('change', function () {
+  if ($('#newpass').val() == $('#conpassword').val()) {
+    $('#message').html('Matching').css('color', 'green');
+  } else 
+    $('#message').html('Not Matching').css('color', 'red');
+});
+    </script>
+
+						</div>
+						<div class="text-center mb-3">
+							<button class="btn btn-primary mt-2">Update</button>
+							<a href="{% url 'Admin_index' %}"  class="btn btn-warning mt-2">Cancel</a>
+						</div>
+					</div>
+				
+				</form>
+					
+                   
+					
+				</div>
+			</div></div>
+		
+
+
+            
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if msg_success %}
+<script>
+Swal.fire({
+    position: 'center',
+    icon: 'success',
+    text: '{{ msg_success }}',
+    showConfirmButton: false,
+    timer: 1500
+}).then(function () {
+    javascript: history.go(-2);
+})
+
+</script>
+{% endif %}
+
+{% if msg_error %}
+<script>
+Swal.fire({
+    position: 'center',
+    icon: 'success',
+    text: '{{ msg_error }}',
+    showConfirmButton: false,
+    timer: 1500
+}).then(function () {
+    javascript: history.go(-2);
+})
+
+</script>
+{% endif %}
+
+
+{% endblock %}

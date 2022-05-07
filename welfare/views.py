@@ -4,6 +4,11 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
+import os
+import random
+from django.conf import settings
+from finalproject.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 
 def index(request):
 	return render(request, 'welfare_temp/index.html')
@@ -172,6 +177,72 @@ def Registration2(request):
 
 
 
+def Forgot_password(request):
+    if request.method == "POST":
+        email_id = request.POST.get('email')
+        access_user_data = user_registration.objects.filter(email=email_id).exists()
+        access_rest_data = restaurant_registration.objects.filter(email=email_id).exists()
+        if access_user_data:
+            _user = user_registration.objects.filter(email=email_id)
+            password = random.SystemRandom().randint(100000, 999999)
+            print(password)
+            _user.update(password = password)
+            subject =' your authentication data updated'
+            message = 'Password Reset Successfully\n\nYour login details are below\n\nUsername : ' + str(email_id) + '\n\nPassword : ' + str(password) + \
+                '\n\nYou can login this details\n\nNote: This is a system generated email, do not reply to this email id'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email_id, ]
+            send_mail(subject, message, email_from,
+                      recipient_list, fail_silently=True)
+            # _user.save()
+            msg_success = "Password Reset successfully check your mail new password"
+            return render(request, 'welfare_temp/Forgotpassword.html', {'msg_success': msg_success})
+        elif access_rest_data:
+            _user = restaurant_registration.objects.filter(email=email_id)
+            password = random.SystemRandom().randint(100000, 999999)
+            print(password)
+            _user.update(password = password)
+            subject =' your authentication data updated'
+            message = 'Password Reset Successfully\n\nYour login details are below\n\nUsername : ' + str(email_id) + '\n\nPassword : ' + str(password) + \
+                '\n\nYou can login this details\n\nNote: This is a system generated email, do not reply to this email id'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email_id, ]
+            send_mail(subject, message, email_from,
+                      recipient_list, fail_silently=True)
+            # _user.save()
+            msg_success = "Password Reset successfully check your mail new password"
+            return render(request, 'welfare_temp/Forgotpassword.html', {'msg_success': msg_success})
+        else:
+            msg_error = "This email does not exist  "
+            return render(request, 'welfare_temp/Forgotpassword.html', {'msg_error': msg_error})
+    return render(request,'welfare_temp/Forgotpassword.html')
+
+
+
+
+def Admin_Accountsett(request):
+    if 'SAdm_id' in request.session:
+        if request.session.has_key('SAdm_id'):
+            SAdm_id = request.session['SAdm_id']
+        users = User.objects.filter(id=SAdm_id)
+        
+        if request.method == 'POST':
+
+            newPassword = request.POST.get('newPassword')
+            confirmPassword = request.POST.get('confirmPassword')
+
+            user = User.objects.get(is_superuser=True)
+            if newPassword == confirmPassword:
+                user.set_password(newPassword)
+                user.save()
+                msg_success = "Password has been changed successfully"
+                return render(request, 'admin_temp/Admin_Accountsett.html', {'msg_success': msg_success})
+            else:
+                msg_error = "Password does not match"
+                return render(request, 'admin_temp/Admin_Accountsett.html', {'msg_error': msg_error})
+        return render(request, 'admin_temp/Admin_Accountsett.html', {'users': users})
+    else:
+        return redirect('/')
 
 
 
@@ -416,7 +487,54 @@ def Donar_admin_messages_replay(request,id):
 
 
 
+def Doner_Accsetting(request):
+    if 'Tnr_id' in request.session:
+        if request.session.has_key('Tnr_id'):
+            Tnr_id = request.session['Tnr_id']
+        mem1 = user_registration.objects.filter(id=Tnr_id)
+        if request.method == 'POST':
+            abb = user_registration.objects.get(id=Tnr_id)
+            abb.firstname = request.POST.get('fname')
+            abb.lastname = request.POST.get('lname')
+            abb.gender = request.POST.get('gender')
+            abb.email = request.POST.get('email')
+            abb.mobile = request.POST.get('mobile')
+            abb.alternativeno = request.POST.get('alt_no')
+            abb.pincode = request.POST.get('pincode')
+            abb.district = request.POST.get('district')
+            abb.state = request.POST.get('state')
+            abb.country = request.POST.get('country')
+            abb.permanentaddress1 = request.POST.get('address1')
+            abb.permanentaddress2 = request.POST.get('address2')
+            abb.permanentaddress3 = request.POST.get('address3')
+            abb.save()
+            msg_success = "Accounts changed successfully"
+            return render(request, 'admin_temp/Donar_Accsetting.html', {'msg_success': msg_success})
+        return render(request,'admin_temp/Donar_Accsetting.html',{'mem1':mem1})
+    else:
+        return redirect('/')
 
+
+
+def Doner_Changepwd(request,id):
+   
+        if request.method == 'POST':
+            ac = user_registration.objects.get(id=id)
+            oldps = request.POST.get('currentPassword')
+            newps = request.POST.get('newPassword')
+            cmps = request.POST.get('confirmPassword')
+            if oldps != newps:
+                if newps == cmps:
+                    ac.password = request.POST.get('confirmPassword')
+                    ac.save()
+                    msg_success = "Password changed successfully"
+                    return render(request, 'admin_temp/Donar_Accsetting.html', {'msg_success': msg_success})
+            elif oldps == newps:
+                messages.add_message(request, messages.INFO, 'Current and New password same')
+            else:
+                messages.info(request, 'Incorrect password same')
+
+        return redirect('Doner_Accsetting')
 
 
 
@@ -488,6 +606,63 @@ def Ngo_Admin_res_approved_food_det(request):
     
     cs = request_food.objects.filter(status='approved').order_by('-id')
     return render(request, 'admin_temp/Ngo_Admin_res_approved_food_det.html',{'cs': cs})
+
+
+
+
+def Ngo_Accsetting(request):
+    if 'Tne_id' in request.session:
+        if request.session.has_key('Tne_id'):
+            Tne_id = request.session['Tne_id']
+        else:
+            return redirect('/')
+        mem1 = user_registration.objects.filter(id=Tne_id)
+        if request.method == 'POST':
+            abb = user_registration.objects.get(id=Tne_id)
+            abb.firstname = request.POST.get('fname')
+            abb.lastname = request.POST.get('lname')
+            # abb.dateofbirth = request.POST.get('dateofbirth')
+            abb.gender = request.POST.get('gender')
+            abb.email = request.POST.get('email')
+            abb.mobile = request.POST.get('mobile')
+            abb.alternativeno = request.POST.get('alt_no')
+            abb.pincode = request.POST.get('pincode')
+            abb.district = request.POST.get('district')
+            abb.state = request.POST.get('state')
+            abb.country = request.POST.get('country')
+            abb.permanentaddress1 = request.POST.get('address1')
+            abb.permanentaddress2 = request.POST.get('address2')
+            abb.permanentaddress3 = request.POST.get('address3')
+            abb.save()
+            msg_success = "Accounts changed successfully"
+            return render(request, 'admin_temp/Ngo_Accsetting.html', {'msg_success': msg_success})
+        return render(request,'admin_temp/Ngo_Accsetting.html',{'mem1':mem1})
+    else:
+        return redirect('/')
+
+
+
+def Ngo_Changepwd(request,id):
+   
+        if request.method == 'POST':
+            ac = user_registration.objects.get(id=id)
+            oldps = request.POST.get('currentPassword')
+            newps = request.POST.get('newPassword')
+            cmps = request.POST.get('confirmPassword')
+            if oldps != newps:
+                if newps == cmps:
+                    ac.password = request.POST.get('confirmPassword')
+                    ac.save()
+                    msg_success = "Password changed successfully"
+                    return render(request, 'admin_temp/Ngo_Accsetting.html', {'msg_success': msg_success})
+            elif oldps == newps:
+                messages.add_message(request, messages.INFO, 'Current and New password same')
+            else:
+                messages.info(request, 'Incorrect password same')
+
+        return redirect('Ngo_Accsetting')
+
+
 
 
 
@@ -567,3 +742,53 @@ def Restaurent_Admin_messages(request):
     cs = request_food.objects.filter(restaurantname_id=re_id).filter(status='approved').order_by('-id')
     rest=restaurant_registration.objects.get(id=re_id)
     return render(request, 'admin_temp/Restaurent_Admin_messages.html',{'cs': cs,'mem1':mem1,'rest':rest})
+
+
+def Restaurent_Accsetting(request):
+    if 're_id' in request.session:
+        if request.session.has_key('re_id'):
+            re_id = request.session['re_id']
+        else:
+            return redirect('/')
+        mem1 = restaurant_registration.objects.filter(id=re_id)
+        if request.method == 'POST':
+            abb = restaurant_registration.objects.get(id=re_id)
+            abb.restaurantname = request.POST.get('rname')
+            abb.location = request.POST.get('loc')
+            abb.email = request.POST.get('email')
+            abb.mobile = request.POST.get('mobile')
+            abb.alternativeno = request.POST.get('alt_no')
+            abb.pincode = request.POST.get('pincode')
+            abb.district = request.POST.get('district')
+            abb.state = request.POST.get('state')
+            abb.country = request.POST.get('country')
+            abb.permanentaddress1 = request.POST.get('address1')
+            abb.permanentaddress2 = request.POST.get('address2')
+            abb.permanentaddress3 = request.POST.get('address3')
+            abb.save()
+            msg_success = "Accounts changed successfully"
+            return render(request, 'admin_temp/Restaurent_Accsetting.html', {'msg_success': msg_success})
+        return render(request,'admin_temp/Restaurent_Accsetting.html',{'mem1':mem1})
+    else:
+        return redirect('/')
+
+
+
+def Restaurent_Changepwd(request,id):
+    if request.method == 'POST':
+        ac = restaurant_registration.objects.get(id=id)
+        oldps = request.POST.get('currentPassword')
+        newps = request.POST.get('newPassword')
+        cmps = request.POST.get('confirmPassword')
+        if oldps != newps:
+            if newps == cmps:
+                ac.password = request.POST.get('confirmPassword')
+                ac.save()
+                msg_success = "Password changed successfully"
+                return render(request, 'admin_temp/Restaurent_Accsetting.html', {'msg_success': msg_success})
+        elif oldps == newps:
+            messages.add_message(request, messages.INFO, 'Current and New password same')
+        else:
+            messages.info(request, 'Incorrect password same')
+
+        return redirect('Restaurent_Accsetting')
