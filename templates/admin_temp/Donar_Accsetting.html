@@ -1,70 +1,6 @@
-
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Charity &mdash; 100% Free Fully Responsive HTML5 Template by FREEHTML5.co</title>
-	{% load static %}
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
-	<meta name="author" content="FREEHTML5.CO" />
-
-  <!-- 
-	//////////////////////////////////////////////////////
-
-	FREE HTML5 TEMPLATE 
-	DESIGNED & DEVELOPED by FREEHTML5.CO
-		
-	Website: 		http://freehtml5.co/
-	Email: 			info@freehtml5.co
-	Twitter: 		http://twitter.com/fh5co
-	Facebook: 		https://www.facebook.com/fh5co
-
-	//////////////////////////////////////////////////////
-	 -->
-
-  	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
-
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-
-	<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'> -->
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
-	<!-- Bootstrap  -->
-	<!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> -->
-	<!-- Superfish -->
-	<link rel="stylesheet" href="{% static 'css/superfish.css' %}">
-
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-	<!-- Modernizr JS -->
-	<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
-
-	
+{%extends 'admin_temp/Donar_index.html'%}
+{%load static%}
+{%block content%}
 <style>
 	@media (min-width: 576px){
 	
@@ -73,70 +9,17 @@
 }}
 </style>
 
-	</head>
-	<body>
-		<div id="fh5co-wrapper">
-		<div id="fh5co-page">
-		<div class="header-top">
-			<div class="container">
-				<div class="row">
-					
-					<div class="col-md-6 col-sm-6 text-right fh5co-social">
-						<a href="#" class="grow"><i class="icon-facebook2"></i></a>
-						<a href="#" class="grow"><i class="icon-twitter2"></i></a>
-						<a href="#" class="grow"><i class="icon-instagram2"></i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<header id="fh5co-header-section" class="sticky-banner">
-			<div class="container">
-				<div class="nav-header">
-					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-					<h1 id="fh5co-logo"><a href="index.html">Charity</a></h1>
-					
-					<!-- START #fh5co-menu-wrap -->
-					<nav id="fh5co-menu-wrap" role="navigation">
-						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li class="active">
-								<a href="{% url 'Donar_index' %}">Home</a>
-							</li>
-						
-							<li>
-								<!-- <a href="" class="fh5co-sub-ddown">Donate</a> -->
-								
-							</li>
-							<li><a href="{% url 'Donar_donation_det' %}">Donations</a></li>
-							<li><a href="{% url 'Doner_req_det' %}">Request</a></li>
-							<li><a href="{% url 'Doner_admin_message' %}">Messages</a></li>
-							<li><a href="{% url 'Donar_logout' %}">Logout</a></li>
-							<li><a href="{% url 'Doner_Accsetting' %}">Account Settings</a></li>
-						</ul>
-					</nav>
-				</div>
-				</div>
-		
-
-				<center><h1 id="fh5co-logo"><a href="index.html">{{adm.firstname}}</a></h1></center>
-			</div>
-		</header>
-	
-
-		
-		
-		
-		
-
-
-
-
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% for i in mem1 %}
-
+<div class="main-panel">
+	<div class="content-wrapper">
 			<div class="bg-white shadow rounded-lg d-block d-sm-flex ">
 				<div class="profile-tab-nav border-right ">
 					<div class="p-4">
-						
+						<div class="img-circle text-center mb-3">
+							<img src="{% static 'assets/images/ngop.png' %}" class="circle-loader" alt="profile"/>
+						</div>
 						<h4 class="text-center">{{ i.firstname }}</h4>
 					</div>
 					<div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -157,7 +40,7 @@
 					</div>
 				</div>
 
-					<form method="POST" action="{% url 'Doner_Accsetting' %}" enctype="multipart/form-data">
+					<form method="POST" action="{% url 'Ngo_Accsetting' %}" enctype="multipart/form-data">
 						{% csrf_token %}
 
 				<div class="tab-content  " id="v-pills-tabContent">
@@ -264,14 +147,13 @@
 						</div>
 						<div class="text-center">
 							<button class="btn btn-primary">Update</button>
-							
+							<a href="{% url 'Ngo_index' %}"  class="btn btn-warning mt-2">Cancel</a>
 						</div>
 					</div>
 				</form>
 			
-				<div class="tab-content  " id="v-pills-tabContent">
-							<div class="tab-pane fade " id="password" role="tabpanel" aria-labelledby="password">
-						<form action="{% url 'Doner_Changepwd' i.id %}" method="post" enctype="multipart/form-data">
+					<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+						<form action="{% url 'Ngo_Changepwd' i.id %}" method="post" enctype="multipart/form-data">
 							{% csrf_token %} 
 						<h3 class="mb-4">Password Settings</h3>
 						<div class="row">
@@ -298,12 +180,9 @@
 						</div>
 						<div class="text-center">
 							<button class="btn btn-primary">Update</button>
-							
+							<a href="{% url 'Ngo_index' %}"  class="btn btn-warning mt-2">Cancel</a>
 						</div>
 					</div>
-					</div>
-		
-		
 				
 				</form>
 					
@@ -358,8 +237,4 @@
         
     </script>
     {% endif %}
-
-  
-	  </body>
-  </html>
-  
+{% endblock %}
